@@ -50,6 +50,6 @@ def convert_mp4_to_mp3(input_file, youtube_title):
     while os.path.exists(output_file):
         output_file = f"{youtube_title} ({counter}).mp3"
         counter += 1
-    ffmpeg.input(input_file).output(output_file, acodec='libmp3lame', q=2, loglevel="quiet").run(overwrite_output=True)
+    ffmpeg.input(input_file).output(output_file, acodec='libmp3lame', q=2).run(overwrite_output=True)
     print(f"Conversion successful: {input_file} converted to {output_file}")
     os.remove(input_file)
