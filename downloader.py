@@ -2,7 +2,7 @@ import os
 import re
 from pytube import YouTube
 from pytube.exceptions import *
-from moviepy.editor import AudioFileClip
+import ffmpeg
 
 def handle_errors(e):
     error_messages = {
@@ -17,6 +17,7 @@ def handle_errors(e):
         MaxRetriesExceeded: "Maximum retries exceeded",
         ExtractError: "Data extraction failed",
         HTMLParseError: "HTML parsing failed",
+        FileNotFoundError: "FFmpeg missing, check README"
     }
     return f"Error: {error_messages.get(type(e), str(e))}"
 
@@ -42,16 +43,13 @@ def download_video(url, callback, file_extension):
         return "Download Completed!"
     except Exception as e:
         return handle_errors(e)
-    
+
 def convert_mp4_to_mp3(input_file, youtube_title):
     output_file = f"{youtube_title}.mp3"
     counter = 1
     while os.path.exists(output_file):
         output_file = f"{youtube_title} ({counter}).mp3"
         counter += 1
-    video_clip = AudioFileClip(input_file)
-    audio_clip = video_clip
-    audio_clip.write_audiofile(output_file)
-    audio_clip.close()
-    video_clip.close()
+    ffmpeg.input(input_file).output(output_file, acodec='libmp3lame', q=2).run(overwrite_output=True)
+    print(f"Conversion successful: {input_file} converted to {output_file}")
     os.remove(input_file)
