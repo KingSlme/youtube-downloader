@@ -36,6 +36,7 @@ class MainWindow:
         self.progress_label.configure(text=str(int(percentage_of_completion)) + "%")
         self.progress_label.update()
         self.progress_bar.set(float(percentage_of_completion / 100))
+        self.progress_bar.update()
 
     def create_main_window(self):
         # Main Window
