@@ -23,7 +23,10 @@ class MainWindow:
         self.root.focus_force()
         self.result_label.configure(text="Downloading...")
         self.result_label.update()
-        # self.result_label.configure(text=f"{downloader.download_video(self.url_entry.get(), self.progress_bar_callback, self.options_combobox.get())}")
+        self.progress_label.configure(text="0%")
+        self.progress_label.update()
+        self.progress_bar.set(0)
+        self.progress_bar.update()
         self.root.after(1, lambda: self.result_label.configure(text=f"{downloader.download_video(self.url_entry.get(), self.progress_bar_callback, self.options_combobox.get())}"))
 
     def progress_bar_callback(self, stream, chunk, bytes_remaining):
