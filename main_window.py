@@ -21,7 +21,10 @@ class MainWindow:
 
     def download_button_callback(self):
         self.root.focus_force()
-        self.result_label.configure(text=f"{downloader.download_video(self.url_entry.get(), self.progress_bar_callback, self.options_combobox.get())}")
+        self.result_label.configure(text="Downloading...")
+        self.result_label.update()
+        # self.result_label.configure(text=f"{downloader.download_video(self.url_entry.get(), self.progress_bar_callback, self.options_combobox.get())}")
+        self.root.after(1, lambda: self.result_label.configure(text=f"{downloader.download_video(self.url_entry.get(), self.progress_bar_callback, self.options_combobox.get())}"))
 
     def progress_bar_callback(self, stream, chunk, bytes_remaining):
         total_size = stream.filesize
@@ -37,7 +40,7 @@ class MainWindow:
         customtkinter.set_appearance_mode("dark")
         customtkinter.set_default_color_theme("dark-blue")
         MainWindow.center_window(self.root, 410, 220)
-        self.root.resizable(width=False, height=False)
+        self.root.resizable(width=True, height=True)
         # Frames
         frame = customtkinter.CTkFrame(master=self.root)
         frame.pack(pady=10, padx=10, fill="both", expand=True)
