@@ -40,7 +40,7 @@ class MainWindow:
 
     def create_main_window(self):
         # Main Window
-        self.root.title("Youtube Downloader")
+        self.root.title("YouTube Downloader")
         customtkinter.set_appearance_mode("dark")
         customtkinter.set_default_color_theme("dark-blue")
         MainWindow.center_window(self.root, 410, 220)
